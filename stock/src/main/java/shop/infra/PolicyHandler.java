@@ -20,6 +20,11 @@ public class PolicyHandler {
     @Autowired
     StockRepository stockRepository;
 
+    @PostConstruct
+    private void initStockRepository() {
+        Stock.setRepository(stockRepository);
+    }
+
     @StreamListener(KafkaProcessor.INPUT)
     public void whatever(@Payload String eventString) {}
 
