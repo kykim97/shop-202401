@@ -12,7 +12,6 @@ import shop.domain.StockIncreased;
 @Entity
 @Table(name = "Stock_table")
 @Data
-//<<< DDD / Aggregate Root
 public class Stock {
 
     @Id
@@ -21,69 +20,13 @@ public class Stock {
 
     private Integer stock;
 
-    @PostPersist
-    public void onPostPersist() {
-        StockDecreased stockDecreased = new StockDecreased(this);
-        stockDecreased.publishAfterCommit();
-
-        StockIncreased stockIncreased = new StockIncreased(this);
-        stockIncreased.publishAfterCommit();
-    }
-
-    public static StockRepository repository() {
-        StockRepository stockRepository = StockApplication.applicationContext.getBean(
-            StockRepository.class
-        );
-        return stockRepository;
-    }
-
-    //<<< Clean Arch / Port Method
     public static void decreaseStock(DeliveryStarted deliveryStarted) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
-        Stock stock = new Stock();
-        repository().save(stock);
-
-        */
-
-        /** Example 2:  finding and process
-        
-        repository().findById(deliveryStarted.get???()).ifPresent(stock->{
-            
-            stock // do something
-            repository().save(stock);
-
-
-         });
-        */
-
+        repository()
+            .findById(deliveryStarted.getId())
+            .ifPresent(stock -> {
+                stock.stock -= deliveryStarted.getQty();
+                repository().save(stock);
+            });
     }
-
-    //>>> Clean Arch / Port Method
-    //<<< Clean Arch / Port Method
-    public static void increaseStock(DeliveryCancelled deliveryCancelled) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
-        Stock stock = new Stock();
-        repository().save(stock);
-
-        */
-
-        /** Example 2:  finding and process
-        
-        repository().findById(deliveryCancelled.get???()).ifPresent(stock->{
-            
-            stock // do something
-            repository().save(stock);
-
-
-         });
-        */
-
-    }
-    //>>> Clean Arch / Port Method
-
+    //other class contents
 }
-//>>> DDD / Aggregate Root
