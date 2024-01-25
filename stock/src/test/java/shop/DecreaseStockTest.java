@@ -52,8 +52,8 @@ public class DecreaseStockTest {
         outputEvent.setStock(5);
 
         try {
-            assertEquals(outputEvent.getId(), 1L);
-            assertEquals(outputEvent.getStock(), 5L);
+            assertEquals(outputEvent.getId(), Long.valueOf(1));
+            assertEquals(outputEvent.getStock(), Integer.valueOf(5));
         } catch (JsonProcessingException e) {
             assertTrue("exception", false);
         }
