@@ -26,20 +26,20 @@ public class Stock {
     }
 
     public static void decreaseStock(DeliveryStarted deliveryStarted) {
-        repository()
+        repository
             .findById(deliveryStarted.getId())
             .ifPresent(stock -> {
                 stock.stock -= deliveryStarted.getQty();
-                repository().save(stock);
+                repository.save(stock);
             });
     }
 
     public static void increaseStock(DeliveryCancelled deliveryCancelled) {
-        repository()
+        repository
             .findById(deliveryCancelled.getId())
             .ifPresent(stock -> {
                 stock.stock += deliveryCancelled.getQty();
-                repository().save(stock);
+                repository.save(stock);
             });
     }
     //other class contents
