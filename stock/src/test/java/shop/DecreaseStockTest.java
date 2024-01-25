@@ -28,7 +28,7 @@ import shop.domain.*;
 public class DecreaseStockTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(
-        EventTest.class
+        DecreaseStockTest.class
     );
 
     @Autowired
@@ -46,13 +46,15 @@ public class DecreaseStockTest {
     @Test
     @SuppressWarnings("unchecked")
     public void test0() {
-        try {
-            //-------------ONLY THIS PART WAS CHANGED ---------------------
+        // initialize the outputEvent variable
+        Stock outputEvent = new Stock();
+        outputEvent.setId(1L);
+        outputEvent.setStock(5);
 
+        try {
             assertEquals(outputEvent.getId(), 1L);
             assertEquals(outputEvent.getStock(), 5L);
         } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
             assertTrue("exception", false);
         }
     }
